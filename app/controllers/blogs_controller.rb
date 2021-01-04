@@ -7,7 +7,8 @@ class BlogsController < ApplicationController
     @blog = current_user.blogs.build
   end
   def create
-    @blog = current_user.blogs.build(blog_params)
+    @blog = Blog.new(blog_params)
+    @blog.user_id = current_user.id
     if params[:back]
       render :new
     else
@@ -35,6 +36,7 @@ class BlogsController < ApplicationController
     redirect_to blogs_path, notice:"ブログを削除しました！"
   end
   def confirm
+        #createの下2行を省略して記述してある
     @blog = current_user.blogs.build(blog_params)
     render :new if @blog.invalid?
   end
